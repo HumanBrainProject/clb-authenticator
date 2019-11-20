@@ -49,6 +49,7 @@ class RefreshUserMixin:
                 Any fields not present will be left unchanged.
                 This can include updating `.admin` or `.auth_state` fields.
         """
+
         # Nothing to do if we don't have the auth state.
         if not self.enable_auth_state:
             raise "Refreshing user requires `enable_auth_state` to be set."
@@ -57,8 +58,9 @@ class RefreshUserMixin:
         access_token = auth_state["access_token"]
         refresh_token = auth_state.get("refresh_token")
         refresh_access_token = refresh_token and not self._expired(refresh_token)
-
+        self.log.debug("Checking access token expiry for user %s", user.name)
         if self._expired(access_token):
+            self.log.info("Refreshing user info for user %s", user.name)
             if not refresh_access_token:
                 return False
             try:
