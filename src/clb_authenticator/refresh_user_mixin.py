@@ -5,12 +5,12 @@ import urllib
 
 from tornado.httpclient import HTTPRequest, AsyncHTTPClient
 from tornado.httputil import url_concat
-from traitlets import Integer
+from traitlets import (HasTraits, Integer)
 
 from . import utils
 
 
-class RefreshUserMixin:
+class RefreshUserMixin(HasTraits):
     """ The RefreshUserMixin is meant to be added to the GenericOAuthenticator to
     provide access_token renewal when it expires.
     """
