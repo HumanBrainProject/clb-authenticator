@@ -15,16 +15,6 @@ class RefreshUserMixin:
     provide access_token renewal when it expires.
     """
 
-    refresh_margin = Integer(
-        5,
-        allow_none=True,
-        config=True,
-        help=(
-            "Number of seconds before expiry to trigger a renewal of the access "
-            + "token. Set to None to use exact time."
-        ),
-    )
-
     async def refresh_user(self, user, handler=None):
         """Refresh auth data for a given user
 
@@ -105,7 +95,7 @@ class RefreshUserMixin:
         """
         payload = utils.get_payload(token)
         exp = int(payload.get("exp"))
-        t = time.time() + (self.refresh_margin or 0)
+        t = time.time() + self.refresh_margin
         return exp <= t
 
     async def get_idp_userdata(self, access_token):
@@ -163,3 +153,12 @@ class RefreshUserMixin:
         )
         resp = await AsyncHTTPClient().fetch(req)
         return json.loads(resp.body.decode("utf8", "replace"))
+
+    refresh_margin = Integer(
+        5,
+        config=True,
+        help=(
+            "Number of seconds before expiry to trigger a renewal of the access "
+            + "token. Set to 0 to use exact time."
+        ),
+    )
