@@ -13,6 +13,6 @@ def get_payload(jwt_token):
     Return:
        payload (dict): token payload
     """
-    encoded_payload = jwt_token.split(b'.')[1]
+    encoded_payload = jwt_token.split('.')[1]
     json_payload = b64decode(padded(encoded_payload))
     return json.loads(json_payload)

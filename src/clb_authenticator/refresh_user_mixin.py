@@ -52,7 +52,8 @@ class RefreshUserMixin:
 
         # Nothing to do if we don't have the auth state.
         if not self.enable_auth_state:
-            raise "Refreshing user requires `enable_auth_state` to be set."
+            self.log.warn("Failed to refresh access token, enable_auth_state is False")
+            return False
 
         auth_state = await user.get_auth_state()
         access_token = auth_state["access_token"]
