@@ -9,7 +9,7 @@ with open('README.md') as rm:
 
 setup(
     name='clb-authenticator',
-    version='0.1.0',
+    version='0.1.1',
     description='The Collaboratory Authenticator is based on the GenericOAuthenticator and adds user refreshing and roles.',
     long_description=long_description,
     author='Human Brain Project Collaboratory Team',

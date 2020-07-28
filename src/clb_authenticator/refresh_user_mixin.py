@@ -94,7 +94,11 @@ class RefreshUserMixin(HasTraits):
                Return True if the token is expired, False otherwise.
         """
         payload = utils.get_payload(token)
-        exp = int(payload.get("exp"))
+
+        exp = 0
+        if "exp" in payload:
+            exp = int(payload.get("exp"))
+
         t = time.time() + self.refresh_margin
         return exp <= t
 
